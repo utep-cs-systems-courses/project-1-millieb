@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tokenizer.h"
+#define OUT 0
+#define IN 1
 
 /*Return true (1) if whitespace*/
 int space_char(char c)
@@ -48,9 +50,28 @@ char *word_terminator(char *word)
 }
 
 /*Count the number of words in the string*/
-int count_words(*str)
+int count_words(char *str)
 {
+  char *apt = str;
+  int state = OUT; //The state out detects a separator
+  int wordcount = 0;
   
+
+  while(*str)
+    {
+      if (!non_space_char(*str)) /*if char is a space_char then state=out*/
+	{
+	  state = OUT;
+	}
+
+      else if(state == OUT) /*if char is !space_char then state = in and increment counter */
+	{
+          state = IN;
+	  wordcount++;
+	}
+      str++; /*move on to next word*/	
+    }
+      return wordcount;
 }
 
 
