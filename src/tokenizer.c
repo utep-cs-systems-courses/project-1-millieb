@@ -39,8 +39,30 @@ char word_start(char *str)
 /*Return a pointer terminator char following *word */
 char *word_terminator(char *word)
 {
+  char *apt = word;
+  while (!non_space_char(*apt)) /*while false*/
+    {
+      apt++;
+    }
+  return 0;
+}
+
+/*Count the number of words in the string*/
+int count_words(*str)
+{
   
 }
+
+
+
+
+
+
+
+
+
+
+
 
 int main()
 {
