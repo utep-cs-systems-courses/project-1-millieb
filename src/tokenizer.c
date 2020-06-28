@@ -79,8 +79,7 @@ char *copy_str(char *inStr, short len)
 {
   char *copystr = malloc(len + 1); /*memory allocation*/
 
-  int tracker;
-  for (tracker = 0; tracker < len; tracker++)
+  for (int tracker = 0; tracker < len; tracker++)
     {
       copystr[tracker] = inStr[tracker]; /*Copies inStr to copystr*/
     }
@@ -88,8 +87,31 @@ char *copy_str(char *inStr, short len)
   return copystr;
 }
 
+/*Prints all tokens.*/
+void print_tokens(char **tokens)
+{
+  int tracker = 0;
+  while(*tokens)
+    {
+      printf("Token[%d] = %s\n", tracker, tokens[tracker]); /*Prints token position and token*/
+      tokens++; /*Next token*/
+    }
+}
 
-int main ()
+/* Frees all tokens and the vector containing themx. */
+void free_tokens(char **tokens)
+{
+  while(*tokens)
+    {
+      free(*tokens);
+      tokens++;
+    }
+  free(tokens);
+}
+
+
+
+int main()
 {
   return 0;
 }
