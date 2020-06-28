@@ -74,18 +74,22 @@ int count_words(char *str)
       return wordcount;
 }
 
+/*Returns a fresly allocated new zero-terminated string containing <len> chars from <inStr>*/
+char *copy_str(char *inStr, short len)
+{
+  char *copystr = malloc(len + 1); /*memory allocation*/
+
+  int tracker;
+  for (tracker = 0; tracker < len; tracker++)
+    {
+      copystr[tracker] = inStr[tracker]; /*Copies inStr to copystr*/
+    }
+  copystr[len] = '\0';
+  return copystr;
+}
 
 
-
-
-
-
-
-
-
-
-
-int main()
+int main ()
 {
   return 0;
 }
