@@ -123,7 +123,7 @@ int length(char *str)
   int currentChar = 0;
   int counter = 0;
 
-  while(non_space_char(apt[currentChar]) && (count_words(apt) > 0))
+  while(non_space_char(str[currentChar]))
     {
       counter++;
       currentChar++;
@@ -135,14 +135,13 @@ char **tokenizer(char *str)
 {
   char *apt = str;
   int wordTracker = 0;
-  int wordCounter = count_words(str);
+  int wordCounter = count_words(apt);
 
   /*Allocate memory for all tokens*/
   char **tokens = (char**)malloc(sizeof(char*)*(wordCounter+1));
 
   while(wordTracker < wordCounter)
     {
-      char *apt = str;
       char *start = str;
       *start = word_start(apt);
       char *end = word_terminator(start);
