@@ -30,21 +30,19 @@ int non_space_char(char c)
 /*Returns a pointer to the first character of the next space separated string*/
 char word_start(char *str)
 {
-  char *apt = str;
-  while (non_space_char(*apt)) /*while true*/
+  while (non_space_char(*str)) /*while true*/
     {
-      apt++;
+      str++;
     }
-  return *apt;
+  return *str;
 }
 
 /*Return a pointer terminator char following *word */
 char *word_terminator(char *word)
 {
-  char *apt = word;
-  while (!non_space_char(*apt)) /*while false*/
+  while (!non_space_char(*word)) /*while false*/
     {
-      apt++;
+      word++;
     }
   return 0;
 }
@@ -109,9 +107,64 @@ void free_tokens(char **tokens)
   free(tokens);
 }
 
+/* Returns a freshly allocated vector of freshly allocated tokens from str.
+   For example, tokenize("hello world string") would result in:
+     tokens[0] = "hello"
+     tokens[1] = "world"
+     tokens[2] = "string" 
+     tokens[3] = 0
+*/
 
-
-int main()
+int length(char *str)
 {
+  char *apt = str;
+  *apt = word_start(apt);
+
+  int currentChar = 0;
+  int counter = 0;
+
+  while(non_space_char(apt[currentChar]) && (count_words(apt) > 0))
+    {
+      counter++;
+      currentChar++;
+    }
+  return counter;
+}
+
+char **tokenizer(char *str)
+{
+  char *apt = str;
+  int wordTracker = 0;
+  int wordCounter = count_words(str);
+
+  /*Allocate memory for all tokens*/
+  char **tokens = (char**)malloc(sizeof(char*)*(wordCounter+1));
+
+  while(wordTracker < wordCounter)
+    {
+      char *apt = str;
+      char *start = str;
+      *start = word_start(apt);
+      char *end = word_terminator(start);
+      char *newWord = copy_str(apt, length(apt));
+      apt = word_terminator(apt);
+
+      tokens[wordTracker] = newWord;
+      wordTracker++;
+    }
+  tokens[wordTracker] = "\0";
+  return tokens;
+}
+
+
+int main () {
+  char input[100];
+  
+  printf(">");
+  scanf("%[^\n]", input);
+
+  printf("%s\n",input);
+  printf("%i\n", length(input));
   return 0;
+
 }
