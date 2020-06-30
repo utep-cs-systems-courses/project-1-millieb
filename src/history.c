@@ -65,12 +65,24 @@ char *get_history(List *list, int id)
 /*Print the entire contents of the list*/
 void print_history(List *list)
 {
-  Item* tempItem = list->root;
+  Item *tempItem = list->root;
   while(tempItem != NULL)
     {
       printf("%s\n", list->root);
       tempItem = tempItem ->next; //to iterate
     }
+}
+
+/*Free the history list and the strings it references*/
+void free_history(List *list)
+{
+  Item *helper = list->root;
+  while(helper != NULL)
+    {
+      helper = helper->next; //helper points to next node
+      free(helper);      
+    }
+  free(list);
 }
 
 int main()
