@@ -4,17 +4,15 @@
 #define OUT 0
 #define IN 1
 
-/*Return true (1) if whitespace*/
+/*Return true (1) ifit is whitespace*/
 int space_char(char c)
 {
   if (c == ' ' || c == '\t')
     return 1;
   
-  else if (c == '\n') /*zero terminators return false*/
-    return 0;
-  
   else
-  return 0;
+    return 0;
+ 
 }
 
 /*Return true (1) if non-whitespace*/
@@ -153,17 +151,4 @@ char **tokenizer(char *str)
     }
   tokens[wordTracker] = "\0";
   return tokens;
-}
-
-
-int main () {
-  char input[100];
-  
-  printf(">");
-  scanf("%[^\n]", input);
-
-  printf("%s\n",input);
-  printf("%i\n", length(input));
-  return 0;
-
 }

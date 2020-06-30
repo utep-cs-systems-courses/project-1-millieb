@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tokenizer.h"
 #include "history.h"
 
 /*Initialize the linked list to keep the history*/
@@ -83,9 +82,4 @@ void free_history(List *list)
       free(helper);      
     }
   free(list);
-}
-
-int main()
-{
-  return 0;
 }
