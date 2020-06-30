@@ -6,7 +6,7 @@
 typedef struct s_Item {
   int id;
   char *str;
-  struct s_Item *next; //helps unite two structures of the same type
+  struct s_Item *next; 
 
 } Item;
 
@@ -15,13 +15,12 @@ typedef struct s_List {
 
 } List;
 
-
-
 /* Initialize the linked list to keep the history. */
 List* init_history() 
 {
-  List *head = (List*)malloc(sizeof(List)); //allocating memory
-  head -> root = NULL; 
+  List *head;
+  head = (List*)malloc(sizeof(List)); //allocating memory
+  head -> root = NULL; //initializing null list 
   return head;
 }
 
@@ -31,7 +30,25 @@ List* init_history()
 */
 void add_history(List *list, char *str)
 {
-  
+  Item *newItem, *helper;
+  newItem = (Item*)malloc(sizeof(Item));
+  newItem->str = str; //newItem asigna a str whatever str has
+  newItem->next = NULL; //newItem now has to point to another new structure
+  if(list == NULL)
+    {
+      list = newItem; //If empty it assigns it as the first value
+    }
+  else
+    {
+      /*To avoid losing values when rewriting/adding more items*/
+      helper = list; //we store list items in a temp/aux variable
+      while(helper->next != NULL)
+	{
+	  helper = helper->next;
+	}
+      helper->next = newItem;
+    }
+  return list;
 }
 
 
