@@ -2,19 +2,6 @@
 #include <stdlib.h>
 #include "tokenizer.h"
 #include "history.h"
-/*
-typedef struct s_Item {
-  int id;
-  char *str;
-  struct s_Item *next;
-
-}Item;
-
-typedef struct s_List {
-  struct s_Item *root;
-
-}List;
-*/
 
 /*Initialize the linked list to keep the history*/
 List* init_history()
@@ -57,6 +44,25 @@ void add_history(List *list, char *str)
     }
 }
 
+/* Retrieve the string stored in the node where Item->id == id.
+   List* list - the linked list
+   int id - the id of the Item to find */ //obtained help from geeksforgeeks.org review/study
+char *get_history(List *list, int id)
+{
+  Item *helper;
+  helper = list->root;
+  while(helper !=NULL)
+    {
+      if(helper->id == id)
+	{
+	  return (helper->str);
+	}
+      helper = helper->next;
+    }
+  return 0;
+}
+
+/*Print the entire contents of the list*/
 void print_history(List *list)
 {
   Item* tempItem = list->root;
