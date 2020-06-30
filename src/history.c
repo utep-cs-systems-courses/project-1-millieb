@@ -40,20 +40,21 @@ void add_history(List *list, char *str)
 
   if(list == NULL)
     {
-      list = newItem; //If empty it assigns it as the first value
+      list->root = newItem; //If empty it assigns it as the first value
+      newItem->id = 1;
     }
   
   else
     {
       /*To avoid losing values when rewriting/adding more items*/
-      helper = list; //we store list items in a temp/aux variable
+      helper = list->root; //we store list items in a temp/aux variable
       while(helper->next != NULL)
 	{
 	  helper = helper->next;
 	}
       helper->next = newItem;
+      helper->id = newItem->id + 1;
     }
-  return list;
 }
 
 void print_history(List *list)
