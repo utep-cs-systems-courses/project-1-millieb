@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tokenizer.h"
-#include "history.h"
+#include "tokenizer.c"
+#include "history.c"
 
 void main()
 {
   char input[100];
+  List *list = init_history();
 
   while(1)
     {
@@ -26,7 +27,9 @@ void main()
 	}
       else
 	{
-	  printf("Text entered is: %s\n\n", input);
+	  
+	  add_history(list, input);
+   
 	}
     }
 }
