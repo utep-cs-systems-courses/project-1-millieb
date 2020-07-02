@@ -28,7 +28,7 @@ int non_space_char(char c)
 /*Returns a pointer to the first character of the next space separated string*/
 char word_start(char *str)
 {
-  while (non_space_char(*str)) /*while true*/
+  while (space_char(*str)) /*while true*/
     {
       str++;
     }
@@ -38,7 +38,7 @@ char word_start(char *str)
 /*Return a pointer terminator char following *word */
 char *word_terminator(char *word)
 {
-  while (!non_space_char(*word)) /*while false*/
+  while (non_space_char(*word)) /*while false*/
     {
       word++;
     }
@@ -55,7 +55,7 @@ int count_words(char *str)
 
   while(*str)
     {
-      if (!non_space_char(*str)) /*if char is a space_char then state=out*/
+      if (space_char(*str)) /*if char is a space_char then state=out*/
 	{
 	  state = OUT;
 	}
@@ -73,24 +73,22 @@ int count_words(char *str)
 /*Returns a fresly allocated new zero-terminated string containing <len> chars from <inStr>*/
 char *copy_str(char *inStr, short len)
 {
-  char *copystr = malloc(len + 1); /*memory allocation*/
-
-  for (int tracker = 0; tracker < len; tracker++)
+  char *copystr = (char*)malloc((sizeof(char*))*(len+1)); /*memory allocation*/
+  int tracker;
+  for (tracker = 0; tracker < len; tracker++)
     {
       copystr[tracker] = inStr[tracker]; /*Copies inStr to copystr*/
+      copystr[len] = '\0';
+      return copystr;
     }
-  copystr[len] = '\0';
-  return copystr;
 }
 
 /*Prints all tokens.*/
 void print_tokens(char **tokens)
 {
-  int tracker = 0;
-  while(*tokens)
+  for(int i = 0; tokens[i]!= "\0"; i++)
     {
-      printf("Token[%d] = %s\n", tracker, tokens[tracker]); /*Prints token position and token*/
-      tokens++; /*Next token*/
+      printf("Token[%d] = %s\n", i, tokens[i]); /*Prints token position and token*/
     }
 }
 
@@ -116,39 +114,35 @@ void free_tokens(char **tokens)
 int length(char *str)
 {
   char *apt = str;
-  *apt = word_start(apt);
+  char *start;
+  char *end;
+  int length;
 
-  int currentChar = 0;
-  int counter = 0;
+  *start = word_start(apt);
+  end = word_terminator(apt);
 
-  while(non_space_char(str[currentChar]))
-    {
-      counter++;
-      currentChar++;
-    }
-  return counter;
+  length = end - start;
+  
+  return length;
 }
 
-char **tokenizer(char *str)
+char **tokenize(char *str)
 {
-  char *apt = str;
-  int wordTracker = 0;
-  int wordCounter = count_words(apt);
+  int wordCounter = count_words(str);
+  int len, i;
+  char *temp = str;
 
   /*Allocate memory for all tokens*/
-  char **tokens = (char**)malloc(sizeof(char*)*(wordCounter+1));
-
-  while(wordTracker < wordCounter)
+  char **tokens = (char**)malloc((sizeof(char*))*(wordCounter+1));
+  
+  for(i = 0; i<wordCounter; i++)
     {
-      char *start = str;
-      *start = word_start(apt);
-      char *end = word_terminator(start);
-      char *newWord = copy_str(apt, length(apt));
-      apt = word_terminator(apt);
+      len = length(temp);
+      tokens[i] = copy_str(temp, len);
 
-      tokens[wordTracker] = newWord;
-      wordTracker++;
-    }
-  tokens[wordTracker] = "\0";
+      temp = word_terminator(temp); //return to start of a word
+    } 
+  tokens[i] = "\0";
   return tokens;
 }
+

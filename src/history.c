@@ -13,17 +13,12 @@ List* init_history()
 
 /* Add a history item to the end of the list.
    List* list - the linked list
-   char* str - the string to store
-*/
+   char* str - the string to store*/
 void add_history(List *list, char *str)
 {
-  Item *newItem, *helper;
-
-  newItem = (Item*)malloc(sizeof(Item));
-
-  newItem->str = str; //newItem asigns to str whatever str has
-  newItem->next = NULL; //newItem now has to point to another new structure
-
+  Item *newItem;
+  newItem = list->root;
+  
   if(list == NULL)
     {
       list->root = newItem; //If empty it assigns it as the first value
@@ -32,14 +27,13 @@ void add_history(List *list, char *str)
   
   else
     {
-      /*To avoid losing values when rewriting/adding more items*/
-      helper = list->root; //we store list items in a temp/aux variable
-      while(helper->next != NULL)
+      newItem = (Item*)malloc(sizeof(Item));
+      while(newItem->next != NULL)
 	{
-	  helper = helper->next;
+	  newItem = newItem->next;
 	}
-      helper->next = newItem;
-      helper->id = newItem->id + 1;
+      newItem->str = str; //newItem assigns to str whatever str has
+      newItem->id = newItem->id+1;
     }
 }
 
@@ -64,11 +58,18 @@ char *get_history(List *list, int id)
 /*Print the entire contents of the list*/
 void print_history(List *list)
 {
-  Item *tempItem = list->root;
-  while(tempItem != NULL)
+  Item *newItem = list->root;
+  if(newItem->next == NULL)
     {
-      printf("%s\n", list->root);
-      tempItem = tempItem ->next; //to iterate
+      printf("id: %i > %s\n", newItem->id, newItem->str);
+    }
+  else
+    {
+      while(newItem->next != NULL)
+	{
+	  printf("id: %i > %s\n", newItem->id, newItem->str);
+	  newItem = newItem->next;
+	}
     }
 }
 

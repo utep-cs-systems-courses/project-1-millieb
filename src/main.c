@@ -26,10 +26,11 @@ void main()
 	  exit(0);
 	}
       else
-	{
-	  
+	{	  
 	  add_history(list, input);
-   
+	  char **tokens = tokenize(input);
+	  print_tokens(tokens);
+	  //print_history(list);
 	}
     }
 }
