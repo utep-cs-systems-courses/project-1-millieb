@@ -48,26 +48,25 @@ char *word_terminator(char *word)
 /*Count the number of words in the string*/
 int count_words(char *str)
 {
-  char *apt = str;
   int state = OUT; //The state out detects a separator
   int wordcount = 0;
   
 
   while(*str)
     {
-      if (space_char(*str)) /*if char is a space_char then state=out*/
+      if (non_space_char(*str) && state == 0) /*if char is a space_char then state=out*/
 	{
-	  state = OUT;
-	}
-
-      else if(state == OUT) /*if char is !space_char then state = in and increment counter */
-	{
-          state = IN;
+	  state = IN;
 	  wordcount++;
 	}
-      str++; /*move on to next word*/	
-    }
+
+      else if(state == IN && space_char(*str)) /*if char is !space_char then state = in and increment counter */
+	{
+          state = OUT;
+	  *str++;
+	}
       return wordcount;
+    }
 }
 
 /*Returns a fresly allocated new zero-terminated string containing <len> chars from <inStr>*/
@@ -86,21 +85,22 @@ char *copy_str(char *inStr, short len)
 /*Prints all tokens.*/
 void print_tokens(char **tokens)
 {
-  for(int i = 0; tokens[i]!= "\0"; i++)
+  for(int i = 0; tokens[i] != "\0"; i++)
     {
-      printf("Token[%d] = %s\n", i, tokens[i]); /*Prints token position and token*/
+      printf("Token[%d] = ", i); /*Prints token position*/
+      printf("%s", tokens[i]);
+      printf("\n");
     }
 }
 
 /* Frees all tokens and the vector containing themx. */
 void free_tokens(char **tokens)
 {
-  while(*tokens)
+  for(int i=0; tokens[i] != 0; i++)
     {
-      free(*tokens);
-      tokens++;
+      free(tokens[i]);
+      free(tokens);
     }
-  free(tokens);
 }
 
 /* Returns a freshly allocated vector of freshly allocated tokens from str.

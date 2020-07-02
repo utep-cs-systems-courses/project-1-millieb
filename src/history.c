@@ -16,9 +16,7 @@ List* init_history()
    char* str - the string to store*/
 void add_history(List *list, char *str)
 {
-  Item *newItem;
-  newItem = list->root;
-  
+  Item *newItem =  newItem = list->root; 
   if(list == NULL)
     {
       list->root = newItem; //If empty it assigns it as the first value
@@ -58,18 +56,11 @@ char *get_history(List *list, int id)
 /*Print the entire contents of the list*/
 void print_history(List *list)
 {
-  Item *newItem = list->root;
-  if(newItem->next == NULL)
+  Item *tempItem = list->root;
+  while(tempItem != NULL)
     {
-      printf("id: %i > %s\n", newItem->id, newItem->str);
-    }
-  else
-    {
-      while(newItem->next != NULL)
-	{
-	  printf("id: %i > %s\n", newItem->id, newItem->str);
-	  newItem = newItem->next;
-	}
+      printf("%s\n", list->root);
+      tempItem = tempItem->next;
     }
 }
 
